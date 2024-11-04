@@ -1,17 +1,18 @@
 package it.unibo.inner.impl;
 
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import it.unibo.inner.api.IterableWithPolicy;
 import it.unibo.inner.api.Predicate;
 
 public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
-    private T[] array;
+    private List<T> array;
 
     public IterableWithPolicyImpl(T[] array) {
-        this.array = Arrays.copyOf(array, array.length);
+        this.array = List.of(array);
     }
 
     @Override
@@ -34,14 +35,16 @@ public class IterableWithPolicyImpl<T> implements IterableWithPolicy<T>{
 
         @Override
         public boolean hasNext() {
-            return this.current < IterableWithPolicyImpl.this.array.length;
+            return this.current < IterableWithPolicyImpl.this.array.size();
         }
 
         @SuppressWarnings("unchecked")
         @Override
         public T next() {
-            this.current++;
-            return (T) IterableWithPolicyImpl.this.array[current];
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
+            return (T) IterableWithPolicyImpl.this.array.get(this.current++);
         }
 
     }
