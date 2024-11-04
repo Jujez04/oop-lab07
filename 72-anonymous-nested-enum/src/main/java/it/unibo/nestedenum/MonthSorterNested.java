@@ -1,7 +1,6 @@
 package it.unibo.nestedenum;
 
 import java.util.Comparator;
-import java.util.NoSuchElementException;
 
 /**
  * Implementation of {@link MonthSorter}.
