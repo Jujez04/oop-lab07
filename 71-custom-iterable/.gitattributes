@@ -1,2 +1,2 @@
 * text=auto eol=crlf
-*.java linguist-language=Java
+*.java eol=crlf
