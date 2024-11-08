@@ -36,7 +36,7 @@ public final class MonthSorterNested implements MonthSorter {
 
         static Month fromString(String name) {
             for (Month i : Month.values()) {
-                if ( i.name.equals(name)) {
+                if ( i.name.equals(name.toLowerCase())) {
                     return i;
                 }
             }
@@ -46,25 +46,26 @@ public final class MonthSorterNested implements MonthSorter {
         
     @Override
     public Comparator<String> sortByDays() {
-        return new Comparator<String>() {
-
-            @Override
-            public int compare(String o1, String o2) {
-                return Month.fromString(o1).days - Month.fromString(o2).days;
-            }
-    
-        };
+        return new SortByDays();
     }
 
     @Override
     public Comparator<String> sortByOrder() {
-        return new Comparator<String>() {
+        return  new SortByMonthOrder();
+    }
 
-            @Override
-            public int compare(String o1, String o2) {
-                return Month.fromString(o1).ordinal() - Month.fromString(o2).ordinal();
-            }
+    private static class SortByDays implements Comparator<String>{
+        @Override
+        public int compare(String o1, String o2) {
+            return Month.fromString(o1).days - Month.fromString(o2).days;
+        }
+    }
+
+    private static class SortByMonthOrder implements Comparator<String>{
+        @Override
+        public int compare(String o1, String o2) {
+            return Month.fromString(o1).ordinal() - Month.fromString(o2).ordinal();
+        }
             
-        };
     }
 }
