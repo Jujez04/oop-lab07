@@ -96,13 +96,18 @@ public final class Transformers {
      * @param <I> elements type
      */
     public static <I> List<I> select(final Iterable<I> base, final Function<I, Boolean> test) {
-        final List<I> result = new ArrayList<>();
-        for (I i : base) {
-            if(test.call(i)) {
-                result.add(i);
+        return flattenTransform(base, new Function<I,Collection<? extends I>>() {
+
+            @Override
+            public Collection<? extends I> call(I input) {
+                final List<I> selected = new ArrayList<>();
+                if(test.call(input)) {
+                    selected.add(input);
+                }
+                return selected;
             }
-        }
-        return result;
+            
+        });
     }
 
     /**
