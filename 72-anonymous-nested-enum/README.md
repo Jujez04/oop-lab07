@@ -12,6 +12,8 @@ Si osservi `TestFunctionalLibrary` per trovare esempi di classi anonime che impl
 Ci si prepari a rispondere alla seguente domanda al momento della correzione:
 > perché `identity()` è un metodo, e non una costante `public static`?
 
+Il perché è proprio dovuto a come funziona le type variable, `identity()` possiede T come type variable e fa in modo che il valore di ritorno sia uguale a quello in entrata. Tuttavia è più interessante discutere il caso contrario, cioè come sarebbe stato se `identity()` fosse stata una costante. Quello che succederebbe è che tramite la type variable saremmo costretti a specificare il tipo di oggetto a cui ci stiamo riferendo. Scrivendo per esempio `static final Function<T,T> IDENTITY = ...`, noteremo che il compilatore sottolinea la T come `Cannot make a static reference to the non-static type I` e quindi saremmo costretti a specificare il tipo di oggetto con cui ci stiamo riferendo. Se fosse stato `static final Function<Object, Object> IDENTITY = ...` questo provocherebbe alcuni warning (come cast o uso di raw types) che riducono la qualità del codice.
+
 ## Parte 2: sfruttare le classi anonime per costruire una libreria funzionale
 
 Si implementino le funzioni di utilità non ancora implementate all'interno di `Transformers`.
